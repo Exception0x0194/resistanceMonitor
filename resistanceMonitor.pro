@@ -17,10 +17,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    monitordialog.cpp
+    monitordialog.cpp \
+    sensor.cpp
 
 HEADERS += \
-    monitordialog.h
+    monitordialog.h \
+    sensor.h
 
 FORMS += \
     monitordialog.ui
@@ -34,3 +36,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 INCLUDEPATH += /home/zhang-zw/tools/arm-linux-compiler/lib/gcc/arm-none-linux-gnueabi/4.3.2/include/
+
+QT += charts
