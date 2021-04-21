@@ -17,13 +17,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    camera.cpp \
     main.cpp \
     monitordialog.cpp \
-    sensor.cpp
+    sensor.cpp \
+    yuv2rgb.cpp
 
 HEADERS += \
+    camera.h \
     monitordialog.h \
-    sensor.h
+    sensor.h \
+    yuv2rgb.h
 
 FORMS += \
     monitordialog.ui
@@ -37,3 +41,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 INCLUDEPATH += /home/zhang-zw/tools/arm-linux-compiler/lib/gcc/arm-none-linux-gnueabi/4.3.2/include/
+
+DISTFILES += \
+    LICENSE
