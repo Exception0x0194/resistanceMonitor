@@ -5,7 +5,9 @@
 #include <QtCore>
 #include <QObject>
 #include <QMessageBox>
+#include <QTcpSocket>
 #include "sensor.h"
+//#include "connectionsettingsdialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -26,16 +28,24 @@ public:
     char pictureName[128];
     char buffer[128];
     int refreshingRateMs;
+    bool connected;
     sensor *adcSensor;
+    QTcpSocket *tcpSocket;
+    // connectionSettingsDialog connectionSettings;
 
 private slots:
     void on_graphicRefreshButton_clicked();
     void on_refreshRateSetButton_clicked();
-    void on_connectionSettingsButton_clicked();
 
     void refreshResistance();
     void changeRefreshRate();
     void updateLog(char *buffer);
+
+    void on_connectButton_clicked();
+
+    void on_ADCRefreshRateSetButton_clicked();
+
+    void on_CamRefreshRateSetButton_clicked();
 
 private:
     Ui::monitorDialog *ui;
