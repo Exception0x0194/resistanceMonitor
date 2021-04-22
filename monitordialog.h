@@ -7,8 +7,10 @@
 #include <QMessageBox>
 #include <qfiledialog.h>
 #include <QTcpSocket>
+#include <QPainter>
 #include <sys/timeb.h>
 #include <dirent.h>
+#include "adcpainter.h"
 #include "sensor.h"
 #include "camera.h"
 #include "yuv2rgb.h"
@@ -36,13 +38,14 @@ public:
     int width, height;
     bool connected;
     bool capturing;
+    bool adcGraphics;
     QImage *graphics;
     sensor *adcSensor;
     Camera *myCamera;
     QTcpSocket *tcpSocket;
-
     QString picturePath;
     QStringList pictureNameList;
+    adcPainter *adcGraph;
     // connectionSettingsDialog connectionSettings;
 
 private slots:
@@ -58,13 +61,9 @@ private slots:
     void stopCapturing();
     void changeRefreshRate();
     void updateLog(char *buffer);
-
     void on_graphicsSourceSelect_currentTextChanged(const QString &arg1);
-
     void on_graphicsSourceSelect_currentIndexChanged(const QString &arg1);
-
     void on_pictureRefreshButton_clicked();
-
     void on_pictureSelect_currentIndexChanged(const QString &arg1);
 
 private:

@@ -6,6 +6,10 @@ monitorDialog::monitorDialog(QWidget *parent)
 {
     ui->setupUi(this);
 
+    adcGraph = new adcPainter(this);
+    adcGraph->setGeometry(10, 10, 250, 130);
+    adcGraphics = true;
+
     ui->graphicsSourceSelect->addItem("ADC");
     ui->graphicsSourceSelect->addItem("Camera");
     ui->graphicsSourceSelect->addItem("Picture");
@@ -32,6 +36,7 @@ monitorDialog::monitorDialog(QWidget *parent)
     camRefreshRateMs = 500;
 
     connect(&resistanceRefreshTimer, SIGNAL(timeout()), this, SLOT(refreshResistance()));
+    // connect(&resistanceRefreshTimer, SIGNAL(timeout()), adcGraph, SLOT(paintEvent()));
     resistanceRefreshTimer.start(ADCRefreshRateMs);
 
     connect(&camRefreshTimer, SIGNAL(timeout()), this, SLOT(refreshGraphics()));
@@ -71,7 +76,8 @@ void monitorDialog::refreshResistance()
     sprintf(buffer, "{\"RESISTANCE\":%d,\"TIMESTAMP\":%d}", r, -(startingTime.time * 1000 + startingTime.millitm - currentTime.time * 1000 - currentTime.millitm) / 100);
     if (connected)
         tcpSocket->write(buffer);
-    //printf("%s\n", buffer);
+
+    adcGraph->addResistance(r, adcGraphics);
 }
 
 void monitorDialog::updateLog(char *buffer)
@@ -215,26 +221,33 @@ void monitorDialog::on_graphicsSourceSelect_currentIndexChanged(const QString &a
     ui->graphicsPane->clear();
     if (!arg1.compare("ADC"))
     {
+        // adcGraph->clearResistance();
+        adcGraph->setVisible(true);
         stopCapturing();
         ui->grapicSourceLabel->setText("Graphics:");
         ui->CamRefreshRateSetButton->setDisabled(true);
         ui->pictureSelect->setDisabled(true);
         ui->pictureRefreshButton->setDisabled(true);
+        adcGraphics = true;
     }
     if (!arg1.compare("Camera"))
     {
+        adcGraph->setVisible(false);
         ui->grapicSourceLabel->setText("Cam:");
         ui->CamRefreshRateSetButton->setEnabled((true));
         ui->pictureSelect->setDisabled(true);
         ui->pictureRefreshButton->setDisabled(true);
+        adcGraphics = false;
     }
     if (!arg1.compare("Picture"))
     {
+        adcGraph->setVisible(false);
         stopCapturing();
         ui->grapicSourceLabel->setText("");
         ui->CamRefreshRateSetButton->setDisabled(true);
         ui->pictureSelect->setEnabled(true);
         ui->pictureRefreshButton->setEnabled(true);
+        adcGraphics = false;
     }
 }
 

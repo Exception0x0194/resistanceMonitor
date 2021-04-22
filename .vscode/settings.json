@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "qapplication": "cpp",
-        "qtcpsocket": "cpp"
+        "qtcpsocket": "cpp",
+        "qpixmap": "cpp"
     }
 }

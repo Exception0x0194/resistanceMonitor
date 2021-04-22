@@ -1,4 +1,5 @@
-QT       += core gui
+QT       += core gui \
+    widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    adcpainter.cpp \
     camera.cpp \
     main.cpp \
     monitordialog.cpp \
@@ -24,6 +26,7 @@ SOURCES += \
     yuv2rgb.cpp
 
 HEADERS += \
+    adcpainter.h \
     camera.h \
     monitordialog.h \
     sensor.h \
